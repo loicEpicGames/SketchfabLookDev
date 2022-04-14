@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sketchfab LookDev App</title>
+    <script type="text/javascript" src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.0.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <iframe src="" id="api-frame" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+    
+    <div id="overlay">
+        <h2>Settings <button id="save-json" style="float:right">Save JSON</button><button id="load-json" style="float:right">Load JSON</button></h2>
+        <h3>API Token</h3>
+        <div><label>API Token:</label><input type="text" id="settings-token"></div>
+        <h3>Model uid</h3>
+        <div><label>uid:</label><input type="text" id="settings-uid"></div>
+        <h3>Post-process</h3>
+        <div><input type="checkbox" id="settings-none" selected><label>None</label></div>
+        <div><input type="checkbox" id="settings-ssao" selected><label>SSAO</label></div>
+        <div><input type="checkbox" id="settings-ssr" selected><label>SSR</label></div>
+        <h3>HDRi</h3>
+        <div><input type="checkbox" id="settings-hdr-enable" selected><label>Enabled</label></div>
+        <div><select id="settings-hdr-id"></select></div>
+        <br>
+        <div><label>Rotation</label><input type="range" min="0" max="6.28" step="0.01" id="settings-hdr-rotation"><span id="settings-hdr-rotation-text"></span></div>
+        <div><label>Exposure</label><input type="range" min="0" max="5" step="0.01" id="settings-hdr-exposure"><span id="settings-hdr-exposure-text"></span></div>
+        <br>
+        <div><input type="checkbox" id="settings-hdr-enable-shadows" selected><label>Shadows</label></div>
+        <div><label>Intensity</label><input type="range" min="0" max="5" step="0.01" id="settings-hdr-intensity"><span id="settings-hdr-intensity-text"></span></div>
+        <h3>Camera</h3>
+        <div><label>FOV</label><input type="range" min="1" max="179" step="0.01" value="45" id="camera-fov"><span id="camera-fov-text"></span></div>
+        <label>Position:</label><br><div><input id="camera-x" type="number"><input id="camera-y" type="number"><input id="camera-z" type="number"></div>
+        <label>Look at:</label><br><div><input id="look-x" type="number"><input id="look-y" type="number"><input id="look-z" type="number"></div>
+        <h3>Screenshot</h3>
+        <div><button id="screenshot">Take Screenshot (1920x1200)</button></div>
+    </div>
+
+    <div id="overlay-toggle" class="open">
+        <i id="overlay-toggle-icon" class="fa fa-times"></i>
+    </div>
+
+    <script src="script.js" type="text/javascript"></script>
+</body>
+</html>
