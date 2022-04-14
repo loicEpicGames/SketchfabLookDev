@@ -1,2 +1,0 @@
-# SketchfabLookDev
-LookDev tests
