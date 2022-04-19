@@ -13,30 +13,74 @@
     <iframe src="" id="api-frame" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
     
     <div id="overlay">
-        <h2>Settings <button id="save-json" style="float:right">Save JSON</button><button id="load-json" style="float:right">Load JSON</button></h2>
-        <h3>API Token</h3>
-        <div><label>API Token:</label><input type="text" id="settings-token"></div>
-        <h3>Model uid</h3>
-        <div><label>uid:</label><input type="text" id="settings-uid"></div>
-        <h3>Post-process</h3>
-        <div><input type="checkbox" id="settings-none" selected><label>None</label></div>
-        <div><input type="checkbox" id="settings-ssao" selected><label>SSAO</label></div>
-        <div><input type="checkbox" id="settings-ssr" selected><label>SSR</label></div>
-        <h3>HDRi</h3>
-        <div><input type="checkbox" id="settings-hdr-enable" selected><label>Enabled</label></div>
-        <div><select id="settings-hdr-id"></select></div>
-        <br>
-        <div><label>Rotation</label><input type="range" min="0" max="6.28" step="0.01" id="settings-hdr-rotation"><span id="settings-hdr-rotation-text"></span></div>
-        <div><label>Exposure</label><input type="range" min="0" max="5" step="0.01" id="settings-hdr-exposure"><span id="settings-hdr-exposure-text"></span></div>
-        <br>
-        <div><input type="checkbox" id="settings-hdr-enable-shadows" selected><label>Shadows</label></div>
-        <div><label>Intensity</label><input type="range" min="0" max="5" step="0.01" id="settings-hdr-intensity"><span id="settings-hdr-intensity-text"></span></div>
-        <h3>Camera</h3>
-        <div><label>FOV</label><input type="range" min="1" max="179" step="0.01" value="45" id="camera-fov"><span id="camera-fov-text"></span></div>
-        <label>Position:</label><br><div><input id="camera-x" type="number"><input id="camera-y" type="number"><input id="camera-z" type="number"></div>
-        <label>Look at:</label><br><div><input id="look-x" type="number"><input id="look-y" type="number"><input id="look-z" type="number"></div>
-        <h3>Screenshot</h3>
-        <div><button id="screenshot">Take Screenshot (1920x1200)</button></div>
+
+        <div id="overlay-common-settings">
+            <div><label style="width:100px">API Token:</label><input type="password" id="settings-token"></div>
+            <div><label style="width:100px">uid:</label><input type="text" id="settings-uid"></div>
+        </div>
+
+        <h2 id="overlay-settings-title">View settings 
+            <i class="fa fa-chevron-up" style="font-size:0.8em"></i>
+            <button id="load-json" style="float:right" title="Load settings from a JSON file"><i class="fa fa-folder-open"></i></button>
+            <button id="save-json" style="float:right"title="Save settings to JSON file"><i class="fa fa-arrow-down"></i></button>
+        </h2>
+        <div id="overlay-settings-content">
+            
+            <h3>Post-process</h3>
+            <div><input type="checkbox" id="settings-none" selected><label>None</label></div>
+            <div><input type="checkbox" id="settings-ssao" selected><label>SSAO</label></div>
+            <div><input type="checkbox" id="settings-ssr" selected><label>SSR</label></div>
+            <h3>HDRi</h3>
+            <div><input type="checkbox" id="settings-hdr-enable" selected><label>Enabled</label></div>
+            <div><select id="settings-hdr-id"></select></div>
+            <br>
+            <div><label>Rotation</label><input type="range" min="0" max="6.28" step="0.01" id="settings-hdr-rotation"><span id="settings-hdr-rotation-text"></span></div>
+            <div><label>Exposure</label><input type="range" min="0" max="5" step="0.01" id="settings-hdr-exposure"><span id="settings-hdr-exposure-text"></span></div>
+            <br>
+            <div><input type="checkbox" id="settings-hdr-enable-shadows" selected><label>Shadows</label></div>
+            <div><label>Intensity</label><input type="range" min="0" max="5" step="0.01" id="settings-hdr-intensity"><span id="settings-hdr-intensity-text"></span></div>
+            <h3>Camera</h3>
+            <div><label>FOV</label><input type="range" min="1" max="179" step="0.01" value="45" id="camera-fov"><span id="camera-fov-text"></span></div>
+            <label>Position:</label><br><div><input id="camera-x" type="number"><input id="camera-y" type="number"><input id="camera-z" type="number"></div>
+            <label>Look at:</label><br><div><input id="look-x" type="number"><input id="look-y" type="number"><input id="look-z" type="number"></div>
+        </div>
+
+        <h2 id="overlay-screenshot-title">Screenshot <i class="fa fa-chevron-down" style="font-size:0.8em"></i></h2>
+        <div id="overlay-screenshot-content" style="display:none">
+            <div>
+                <label style="flex:1">Resolution:</label>
+                <input id="screenshot-resolution-x" type="number" min="100" max="4096" step="1" value="1920" style="float:right">
+                <input id="screenshot-resolution-y" type="number" min="100" max="4096" step="1" value="1200" style="float:right">
+            </div>
+            
+            <br>
+            <button id="screenshot">Capture Screenshot</button>
+        </div>
+
+        <h2 id="overlay-batch-title">Batch <i class="fa fa-chevron-down" style="font-size:0.8em"></i></h2>
+        <div id="overlay-batch-content" style="display:none">
+            <h3>Options</h3>
+            <div><input type="checkbox" id="screenshot-postprocess" checked><label>Use current post-processing settings</label></div>
+            <div><input type="checkbox" id="screenshot-camera" checked><label>Use current camera settings</label></div>
+            <div><input type="checkbox" id="screenshot-hdr" checked><label>Use current HDR settings</label></div>
+            <h3>Models list</h3>
+            <div style="margin-top:10px"><select id="screenshot-models">
+                <option value="" disabled selected>Select which models to screenshot</option>
+                <option value="org">All models from "Sketchfab / UE LookDev"</option>
+                <option value="project">Only models from the "LookDev models" project</option>
+                <option value="csv">From a csv file</option>
+            </select></div>
+            <br/>            
+            <div id="models-list"></div>
+            <h3>Run</h3>
+            <div><label style="width:100px">Prefix:</label><input type="text" id="screenshot-prefix" value="Sketchfab"></div>
+            <div><select id="screenshot-naming-method">
+                <option selected value="uid">$Prefix_$Uid.png</option>
+                <option value="epoch">$Prefix_$EpochDate.png</option>
+            </select></div>
+            <div><button id="screenshot-all" title="Use an API token" disabled style="margin-top:10px">Run for all models</button></div>
+        </div>
+    
     </div>
 
     <div id="overlay-toggle" class="open">

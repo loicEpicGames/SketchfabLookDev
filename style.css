@@ -13,9 +13,10 @@ iframe{
 }
 
 #overlay{
+    min-width:340px;
     z-index:2;
     position:absolute;
-    max-height:calc( 100vh - 80px );
+    max-height:calc( 100vh - 90px );
     top:30px;
     right:30px;
     background-color:rgba(0,0,0,0.6);
@@ -28,18 +29,18 @@ iframe{
     overflow-y:scroll;
     border-radius:5px;
 }
-#overlay h2{
+
+#overlay h2:hover{
     color:white;
+    cursor:pointer;
 }
 
-#overlay div{
+#overlay-settings-content div, #overlay-batch-content div, #overlay-common-settings div{
     display:flex;
+    width:100%;
+    margin: 2px 0;
 }
-
-#overlay div label{
-    width:80px;
-}
-#overlay div input[type=range], #overlay div input[type=text], #overlay div select{
+#overlay div div input[type=range], #overlay div div input[type=text], #overlay div div input[type=password], #overlay div div select{
     flex:1;
 }
 #overlay div span{
@@ -49,23 +50,23 @@ iframe{
 #overlay-toggle{
     position:absolute;
     z-index:3;
-    right:10px;
-    top:10px;
-    padding:5px;
+    right:0px;
+    top:0px;
+    padding:10px;
 }
 #overlay-toggle i{
-    font-size:15px;
-    color:rgba(0,0,0,0.5);
+    font-size:20px;
+    color:#ccc;
     transition:0.1s;
 }
 #overlay-toggle:hover{
     cursor:pointer;
 }
 #overlay-toggle:hover i{
-    color:rgba(0,0,0,1);
+    color:white;
 }
 #overlay-toggle i{
-    filter:drop-shadow(0px 0px 1px white)
+    filter:drop-shadow(0px 0px 1px black)
 }
 
 input[type=number]{
@@ -73,7 +74,7 @@ input[type=number]{
     max-width: 100px;;
 }
 
-button, input[type=text], input[type=number], select{
+button, input[type=text], input[type=number], #overlay div div input[type=password], select{
     background-color:rgba(0,0,0,0.5);
     color:#bbb;
     border:1px solid black;
@@ -86,7 +87,7 @@ button{
     font-weight: bold;
     transition:0.1s;
 }
-#screenshot{
+#screenshot, #screenshot-all{
     width:100%;
     padding-top:20px;
     padding-bottom:20px;
@@ -109,3 +110,31 @@ button:hover{
     ::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
+
+#models-list{
+    background-color:rgba(0,0,0,0.5);
+    border-radius:5px;
+    flex-direction: column;
+    display:flex;
+    padding:2px;
+    opacity:0.5;
+    max-height:200px;
+    overflow-y:scroll;
+    overflow-x: hidden;
+}
+
+#models-list div{
+    font-size:0.8em;
+}
+#models-list span{
+    width:100%!important;   
+}
+#models-list div i{
+    color:red;
+    padding-top: 2px;
+}
+
+button:hover:disabled{
+    background-color:rgba(0,0,0,0.5);
+    cursor:not-allowed;
+}
