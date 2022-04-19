@@ -10,9 +10,7 @@ TODO
 * Better trigger redraw lors du change d'HDR
 * Passer les paramètres de caméra via url
 
-file:///C:/Users/loicn/Desktop/SketchfabLookDevApp/index.html?uid=7786614de739435d8b29221628b9703b&camfov=55&campos=0,1,3.545&camlook=0,0,0&screenshot&screenshotx=1280&screenshoty=720&hdr=1&hdrshadows=1&hdrexposure=2&hdrlightintensity=3&hdrrotation=90&hdruid=toto&pp=1&ssr=1&ssao=1
-
-file:///C:/Users/loicn/Desktop/SketchfabLookDevApp/index.html?uid=7786614de739435d8b29221628b9703b&camfov=55&campos=-7,-17,4&camlook=-12,-3,0&screenshot&screenshotx=1280&screenshoty=720&hdr=1&hdrshadows=1&hdrexposure=2&hdrlightintensity=3&hdrrotation=90&hdruid=toto&pp=1&ssr=1&ssao=1
+https://loicepicgames.github.io/SketchfabLookDev/index.html?uid=7786614de739435d8b29221628b9703b&camfov=55&campos=-15,-7,1.5&camlook=-12,-4,0.5&screenshot&screenshotx=1280&screenshoty=720&hdri=1&hdrshadows=1&hdrexposure=2&hdrlightintensity=3&hdrrotation=90&pp=1&ssr=1&ssao=1
 
 */
 
@@ -91,7 +89,7 @@ BackendSettings = {
         "ssao": true,
         "ssr": true,
     },
-    "hdri":{
+    "hdr":{
         "enabled": true,
         "uid": "",
         "rotation": 0,
@@ -121,7 +119,7 @@ function parseJSONintoBackendSettings(){}
 
 function updateUIFromBackendSettings(_settings = []){
     if(_settings.length == 0){
-        _settings = ["apitoken", "modeluid", "hdri", "pp", "cam", "screenshot", "batch"];
+        _settings = ["apitoken", "modeluid", "hdr", "pp", "cam", "screenshot", "batch"];
     }
     _settings.forEach(function(_elt){
         if(_elt in BackendSettings){
@@ -374,14 +372,14 @@ function parseUrlOptions(opts){
     // HDR options
     hdrOpts = {}
     if("hdri" in opts){
-        hdrOpts["enable"] = param("hdr", "bool");
+        hdrOpts["enabled"] = param("hdri", "bool");
         if("hdrshadows" in opts){ hdrOpts["shadowEnabled"] = param('hdrshadows', "bool"); }
         if("hdrexposure" in opts){ hdrOpts["exposure"] = param('hdrexposure', "float"); }
         if("hdrlightintensity" in opts){ hdrOpts["lightIntensity"] = param('hdrlightintensity', "float"); }
         if("hdrrotation" in opts){ hdrOpts["rotation"] = param("hdrrotation", "float") }
         if("hdruid" in opts){ hdrOpts["uid"] = param("hdruid"); }
     }
-    newOpts["hdri"] = hdrOpts;
+    newOpts["hdr"] = hdrOpts;
 
     // Post Process options
     ppOpts = {}
@@ -408,10 +406,6 @@ function initError() {
 }
 
 
-
-
-
-
 function onViewerReady(){
 
     API.addEventListener('camerastop', onCameraEndMovement );
@@ -422,6 +416,7 @@ function onViewerReady(){
     function doScreenShotAndMoveOn(){
         
         setTimeout(function(){
+
             API_Screenshot(
                 {width: screenshotX.value, height: screenshotY.value, delay: 2000, prefix: "Screenshot", suffix: uid},
                 () => {
@@ -432,7 +427,7 @@ function onViewerReady(){
                     }
                 }
             );
-            settingsHDRRotation.dispatchEvent(new Event('input'));
+            
         }, 500)
     }
 
@@ -441,7 +436,7 @@ function onViewerReady(){
         if(hasUrlOptions){
 
             var postProcessingOptions = urlOptions["pp"];
-            var HDROptions = urlOptions["hdri"];
+            var HDROptions = urlOptions["hdr"];
             var screenshotOptions = urlOptions["screenshot"];
             var camOptions = urlOptions["cam"];
             
@@ -450,11 +445,14 @@ function onViewerReady(){
             console.log("screen", screenshotOptions);
             console.log("cam", camOptions);
 
+            if(postProcessingOptions.)
+
             API.setPostProcessing(
                 postProcessingOptions,
                 function(){
                     console.log("Setting hdr options after parsing url options", HDROptions);
                     API.setEnvironment(HDROptions, function(){
+                        settingsHDRRotation.dispatchEvent(new Event('input'));
                         if(("look" in camOptions) && ("pos" in camOptions)){
                             API.setCameraLookAt(camOptions["pos"], camOptions["look"], 0, function(){
                                 if("fov" in camOptions) API.setFov(camOptions["fov"]);
