@@ -91,7 +91,7 @@ BackendSettings = {
         "ssao": true,
         "ssr": true,
     },
-    "hdr":{
+    "hdri":{
         "enabled": true,
         "uid": "",
         "rotation": 0,
@@ -121,7 +121,7 @@ function parseJSONintoBackendSettings(){}
 
 function updateUIFromBackendSettings(_settings = []){
     if(_settings.length == 0){
-        _settings = ["apitoken", "modeluid", "hdr", "pp", "cam", "screenshot", "batch"];
+        _settings = ["apitoken", "modeluid", "hdri", "pp", "cam", "screenshot", "batch"];
     }
     _settings.forEach(function(_elt){
         if(_elt in BackendSettings){
@@ -373,7 +373,7 @@ function parseUrlOptions(opts){
 
     // HDR options
     hdrOpts = {}
-    if("hdr" in opts){
+    if("hdri" in opts){
         hdrOpts["enable"] = param("hdr", "bool");
         if("hdrshadows" in opts){ hdrOpts["shadowEnabled"] = param('hdrshadows', "bool"); }
         if("hdrexposure" in opts){ hdrOpts["exposure"] = param('hdrexposure', "float"); }
@@ -381,7 +381,7 @@ function parseUrlOptions(opts){
         if("hdrrotation" in opts){ hdrOpts["rotation"] = param("hdrrotation", "float") }
         if("hdruid" in opts){ hdrOpts["uid"] = param("hdruid"); }
     }
-    newOpts["hdr"] = hdrOpts;
+    newOpts["hdri"] = hdrOpts;
 
     // Post Process options
     ppOpts = {}
@@ -441,7 +441,7 @@ function onViewerReady(){
         if(hasUrlOptions){
 
             var postProcessingOptions = urlOptions["pp"];
-            var HDROptions = urlOptions["hdr"];
+            var HDROptions = urlOptions["hdri"];
             var screenshotOptions = urlOptions["screenshot"];
             var camOptions = urlOptions["cam"];
             
