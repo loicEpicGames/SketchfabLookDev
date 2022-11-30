@@ -445,7 +445,7 @@ function onViewerReady(){
             console.log("screen", screenshotOptions);
             console.log("cam", camOptions);
 
-            if(postProcessingOptions.)
+            //if(postProcessingOptions.)
 
             API.setPostProcessing(
                 postProcessingOptions,
